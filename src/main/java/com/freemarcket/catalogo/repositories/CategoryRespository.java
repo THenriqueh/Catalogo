@@ -1,4 +1,4 @@
-/*
+
 package com.freemarcket.catalogo.repositories;
 
 import com.freemarcket.catalogo.entities.Category;
@@ -12,4 +12,3 @@ import java.util.List;
 public interface CategoryRespository extends JpaRepository<Category, Long> {
 
 }
-*/

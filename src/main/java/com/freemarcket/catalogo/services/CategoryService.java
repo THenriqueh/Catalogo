@@ -1,5 +1,4 @@
 
-
 package com.freemarcket.catalogo.services;
 
 import com.freemarcket.catalogo.entities.Category;
@@ -19,6 +18,4 @@ public class CategoryService {
         return respository.findAll();
     }
 
-
 }
-

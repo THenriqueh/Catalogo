@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 
 @Entity
 @Table(name = "tb_category")

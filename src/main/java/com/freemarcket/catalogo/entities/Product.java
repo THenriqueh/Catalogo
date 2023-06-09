@@ -10,6 +10,8 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 
 @Entity
 @Table(name = "tb_product")

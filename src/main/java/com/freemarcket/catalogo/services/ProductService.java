@@ -4,7 +4,7 @@ import com.freemarcket.catalogo.DTO.CategoryDTO;
 import com.freemarcket.catalogo.DTO.ProductDTO;
 import com.freemarcket.catalogo.entities.Category;
 import com.freemarcket.catalogo.entities.Product;
-import com.freemarcket.catalogo.repositories.CategoryRespository;
+import com.freemarcket.catalogo.repositories.CategoryRepository;
 import com.freemarcket.catalogo.repositories.ProductRepository;
 import com.freemarcket.catalogo.services.excptions.DatabaseException;
 import com.freemarcket.catalogo.services.excptions.ResourceNotFoundException;
@@ -25,7 +25,7 @@ public class ProductService {
     private ProductRepository respository;
 
     @Autowired
-    private CategoryRespository categoryRespository;
+    private CategoryRepository categoryRespository;
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {

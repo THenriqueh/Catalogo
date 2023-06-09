@@ -3,7 +3,7 @@ package com.freemarcket.catalogo.services;
 
 import com.freemarcket.catalogo.DTO.CategoryDTO;
 import com.freemarcket.catalogo.entities.Category;
-import com.freemarcket.catalogo.repositories.CategoryRespository;
+import com.freemarcket.catalogo.repositories.CategoryRepository;
 import com.freemarcket.catalogo.services.excptions.DatabaseException;
 import com.freemarcket.catalogo.services.excptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +21,17 @@ import java.util.Optional;
 public class CategoryService {
 
     @Autowired
-    private CategoryRespository respository;
+    private CategoryRepository repository;
 
     @Transactional(readOnly = true)
     public Page<CategoryDTO> findAllPaged(PageRequest pageRequest) {
-        Page<Category> list = respository.findAll(pageRequest);
+        Page<Category> list = repository.findAll(pageRequest);
         return list.map(x -> new CategoryDTO(x));
     }
 
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id) {
-        Optional<Category> obj = respository.findById(id);
+        Optional<Category> obj = repository.findById(id);
         Category entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entidade não encontrada"));
         return new CategoryDTO(entity);
     }
@@ -39,19 +39,17 @@ public class CategoryService {
     @Transactional
     public CategoryDTO insert(CategoryDTO categoryDTO) {
         Category entity = new Category();
-
         entity.setName(categoryDTO.getName());
-        respository.save(entity);
-        categoryDTO.getId();
+        entity = repository.save(entity);
         return new CategoryDTO(entity);
     }
     @Transactional
     public CategoryDTO update(Long id, CategoryDTO categoryDTO) {
 
         try {
-            Category entity = respository.getReferenceById(id);
+            Category entity = repository.getReferenceById(id);
             entity.setName(categoryDTO.getName());
-            entity = respository.save(entity);
+            entity = repository.save(entity);
             return new CategoryDTO(entity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id '" + id + "' não encontrado");
@@ -62,7 +60,7 @@ public class CategoryService {
 
     public void delete(Long id) {
         try {
-            respository.deleteById(id);
+            repository.deleteById(id);
         }catch (EmptyResultDataAccessException e){
             throw new ResourceNotFoundException("Id '" + id + "' não encontrado");
         }catch (DataIntegrityViolationException e){

@@ -1,13 +1,11 @@
 package com.freemarcket.catalogo.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 
@@ -17,7 +15,7 @@ public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
+    @Getter private Long id;
+    @Getter @Setter private String name;
 
 }

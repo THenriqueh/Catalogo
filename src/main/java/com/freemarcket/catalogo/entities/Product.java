@@ -3,7 +3,7 @@ package com.freemarcket.catalogo.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.Instant;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,8 +22,6 @@ public class Product {
     @Column(columnDefinition = "TEXT")
     @Getter @Setter private String description;
     @Getter @Setter private Double price;
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    @Getter @Setter private Instant date;
 
     @ManyToMany
     @JoinTable(

@@ -1,18 +1,39 @@
 package com.freemarcket.catalogo.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.freemarcket.catalogo.entities.Category;
+import com.freemarcket.catalogo.entities.Product;
+import lombok.*;
 
-@Data
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ProductDTO {
+public class ProductDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    private Long id;
-    private String name;
-    private String description;
-    private Double price;
+    @Getter private Long id;
+    @Getter @Setter private String name;
+    @Getter @Setter private String description;
+    @Getter @Setter private Double price;
 
+    @Getter @Setter private List<CategoryDTO> categories = new ArrayList<>();
+
+    public ProductDTO(Product entity) {
+        this.id = entity.getId();
+        this.name = entity.getName();
+        this.description = entity.getDescription();
+        this.price = entity.getPrice();
+    }
+
+    public ProductDTO(Product entity, Set<Category> categories) {
+        this(entity);
+        categories.forEach(category -> this.categories.add(new CategoryDTO(category)));
+    }
 }

@@ -30,8 +30,9 @@ import java.util.Optional;
 @Service
 public class UserService implements UserDetailsService {
 	
+
 	private static Logger logger = LoggerFactory.getLogger(UserService.class);
-	
+
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -40,6 +41,8 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private RoleRepository roleRepository;
+
+
 	
 	@Transactional(readOnly = true)
 	public Page<UserDTO> findAllPaged(Pageable pageable) {
@@ -66,7 +69,7 @@ public class UserService implements UserDetailsService {
 	@Transactional
 	public UserDTO update(Long id, UserUpdateDTO dto) {
 		try {
-			User entity = repository.getOne(id);
+			User entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
 			return new UserDTO(entity);
@@ -75,6 +78,8 @@ public class UserService implements UserDetailsService {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}		
 	}
+
+
 
 	public void delete(Long id) {
 		try {
@@ -96,14 +101,25 @@ public class UserService implements UserDetailsService {
 		
 		entity.getRoles().clear();
 		for (RoleDTO roleDto : dto.getRoles()) {
-			Role role = roleRepository.getOne(roleDto.getId());
+			Role role = roleRepository.getReferenceById(roleDto.getId());
 			entity.getRoles().add(role);
 		}
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+		User user = repository.findByEmail(username);
+		if (user == null){
+			logger.error("Usuario" + username + "não encontrado");
+			throw new UsernameNotFoundException("Email não encontrado");
+		}
+		logger.info("Usuario encontrado" + username );
+		return user;
+	}
+/*
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
 		User user = repository.findByEmail(username);
 		if (user == null) {
 			logger.error("User not found: " + username);
@@ -112,4 +128,10 @@ public class UserService implements UserDetailsService {
 		logger.info("User found: " + username);
 		return user;
 	}
+
+ */
 }
+
+
+
+

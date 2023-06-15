@@ -2,8 +2,11 @@
 package com.freemarcket.catalogo.services;
 
 import com.freemarcket.catalogo.DTO.CategoryDTO;
+import com.freemarcket.catalogo.DTO.ProductDTO;
 import com.freemarcket.catalogo.entities.Category;
+import com.freemarcket.catalogo.entities.Product;
 import com.freemarcket.catalogo.repositories.CategoryRepository;
+import com.freemarcket.catalogo.repositories.ProductRepository;
 import com.freemarcket.catalogo.services.excptions.DatabaseException;
 import com.freemarcket.catalogo.services.excptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,8 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepository repository;
+    @Autowired
+    private ProductRepository productRepository;
 
     @Transactional(readOnly = true)
     public Page<CategoryDTO> findAllPaged(PageRequest pageRequest) {
@@ -43,12 +48,14 @@ public class CategoryService {
         entity = repository.save(entity);
         return new CategoryDTO(entity);
     }
+
     @Transactional
     public CategoryDTO update(Long id, CategoryDTO categoryDTO) {
 
         try {
             Category entity = repository.getReferenceById(id);
             entity.setName(categoryDTO.getName());
+
             entity = repository.save(entity);
             return new CategoryDTO(entity);
         } catch (EntityNotFoundException e) {
@@ -61,9 +68,9 @@ public class CategoryService {
     public void delete(Long id) {
         try {
             repository.deleteById(id);
-        }catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Id '" + id + "' não encontrado");
-        }catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Você não pode exluir uma categoria com Produtos cadastrados");
         }
 

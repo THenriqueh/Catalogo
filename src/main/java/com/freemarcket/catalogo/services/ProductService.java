@@ -2,8 +2,11 @@ package com.freemarcket.catalogo.services;
 
 import com.freemarcket.catalogo.DTO.CategoryDTO;
 import com.freemarcket.catalogo.DTO.ProductDTO;
+import com.freemarcket.catalogo.DTO.UserDTO;
+import com.freemarcket.catalogo.DTO.UserInsertDTO;
 import com.freemarcket.catalogo.entities.Category;
 import com.freemarcket.catalogo.entities.Product;
+import com.freemarcket.catalogo.entities.User;
 import com.freemarcket.catalogo.repositories.CategoryRepository;
 import com.freemarcket.catalogo.repositories.ProductRepository;
 import com.freemarcket.catalogo.services.excptions.DatabaseException;
@@ -41,10 +44,10 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO insert(ProductDTO productDTO) {
+    public ProductDTO insert(ProductDTO dto) {
         Product entity = new Product();
-        copyDtoToEntity(productDTO, entity);
-        respository.save(entity);
+        copyDtoToEntity(dto, entity);
+        entity = respository.save(entity);
         return new ProductDTO(entity);
     }
     @Transactional
@@ -68,7 +71,7 @@ public class ProductService {
         }catch (EmptyResultDataAccessException e){
             throw new ResourceNotFoundException("Id '" + id + "' não encontrado");
         }catch (DataIntegrityViolationException e){
-            throw new DatabaseException("Você não pode exluir uma categoria com Produtos cadastrados");
+            throw new DatabaseException("Você não pode exluir uma Um produt com Produtos cadastrados");
         }
 
 
@@ -77,11 +80,13 @@ public class ProductService {
         entity.setName(productDTO.getName());
         entity.setDescription(productDTO.getDescription());
         entity.setPrice(productDTO.getPrice());
-
         entity.getCategories().clear();
-        for (CategoryDTO categoryDTO : productDTO.getCategories()){
-            Category category = categoryRespository.getReferenceById(categoryDTO.getId());
+
+        for(CategoryDTO catDto : productDTO.getCategories()){
+            Category category = categoryRespository.getReferenceById(catDto.getId());
             entity.getCategories().add(category);
         }
+
+
     }
 }

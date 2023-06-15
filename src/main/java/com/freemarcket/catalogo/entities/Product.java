@@ -25,7 +25,7 @@ public class Product {
     @Getter @Setter private String description;
     @Getter @Setter private Double price;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tb_product_category",
             joinColumns = @JoinColumn(name = "product_id"),

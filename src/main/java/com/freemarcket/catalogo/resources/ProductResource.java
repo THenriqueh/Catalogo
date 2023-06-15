@@ -1,6 +1,7 @@
 package com.freemarcket.catalogo.resources;
 
 import com.freemarcket.catalogo.DTO.ProductDTO;
+import com.freemarcket.catalogo.DTO.UserDTO;
 import com.freemarcket.catalogo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 @RestController
 @RequestMapping(value = "/products")
@@ -38,17 +40,14 @@ public class ProductResource {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO productDTO){
-        service.insert(productDTO);
-
+    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO productDTO) {
+        ProductDTO newDto = service.insert(productDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(productDTO.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(productDTO);
-
+                .buildAndExpand(newDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(newDto);
     }
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO productDTO){
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id,@Valid @RequestBody ProductDTO productDTO){
         productDTO = service.update(id, productDTO);
 
         return ResponseEntity.ok().body(productDTO);

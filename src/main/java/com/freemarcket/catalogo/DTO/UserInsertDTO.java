@@ -1,22 +1,26 @@
 package com.freemarcket.catalogo.DTO;
 
+
 import com.freemarcket.catalogo.services.validation.UserInsertValid;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @UserInsertValid
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class UserInsertDTO extends UserDTO {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String password;
+    @Getter
+    @Setter
+    private String password;
 
-	UserInsertDTO() {
-		super();
-	}
-	
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }
+
+

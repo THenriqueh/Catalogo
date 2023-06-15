@@ -1,9 +1,7 @@
 package com.freemarcket.catalogo.DTO;
 
 import com.freemarcket.catalogo.entities.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -11,22 +9,25 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
-@AllArgsConstructor
+
 @NoArgsConstructor
+@AllArgsConstructor
 
 public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    @Getter private Long id;
     @NotBlank(message = "Campo obrigatório")
+    @Getter @Setter
     private String firstName;
+    @Getter @Setter
     private String lastName;
     @Email(message = "Favor entrar um email válido")
+    @Getter @Setter
     private String email;
-    private String password;
 
-    private Set<RoleDTO> roles = new HashSet<RoleDTO>();
+
+    @Getter private Set<RoleDTO> roles = new HashSet<RoleDTO>();
 
     public UserDTO(User entity) {
         id = entity.getId();
@@ -34,6 +35,7 @@ public class UserDTO implements Serializable {
         lastName = entity.getLastName();
         email = entity.getEmail();
         entity.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
+
 
     }
 

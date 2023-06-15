@@ -38,3 +38,5 @@ public class UserInsertValidator implements ConstraintValidator<UserInsertValid,
 		return list.isEmpty();
 	}
 }
+
+

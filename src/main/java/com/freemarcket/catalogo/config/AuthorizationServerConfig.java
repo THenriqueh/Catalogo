@@ -1,5 +1,6 @@
 package com.freemarcket.catalogo.config;
 
+
 import com.freemarcket.catalogo.components.JwtTokenEnhancer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

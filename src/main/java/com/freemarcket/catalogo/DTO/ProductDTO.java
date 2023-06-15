@@ -4,6 +4,8 @@ import com.freemarcket.catalogo.entities.Category;
 import com.freemarcket.catalogo.entities.Product;
 import lombok.*;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -19,17 +21,19 @@ public class ProductDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Getter private Long id;
+    @Size(min = 3, max = 30)
     @Getter @Setter private String name;
     @Getter @Setter private String description;
+    @Positive(message = "Preço tem que ser positivo")
     @Getter @Setter private Double price;
 
     @Getter @Setter private List<CategoryDTO> categories = new ArrayList<>();
 
     public ProductDTO(Product entity) {
-        this.id = entity.getId();
-        this.name = entity.getName();
-        this.description = entity.getDescription();
-        this.price = entity.getPrice();
+        id = entity.getId();
+        name = entity.getName();
+        description = entity.getDescription();
+        price = entity.getPrice();
     }
 
     public ProductDTO(Product entity, Set<Category> categories) {

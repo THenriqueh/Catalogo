@@ -39,3 +39,4 @@ public class WebSecurityConfig {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 }
+

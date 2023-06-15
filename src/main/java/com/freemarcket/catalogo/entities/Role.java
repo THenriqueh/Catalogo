@@ -1,13 +1,11 @@
 package com.freemarcket.catalogo.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -18,8 +16,8 @@ public class Role implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String authority;
+    @Getter @Setter private Long id;
+    @Getter @Setter private String authority;
 
 
 }

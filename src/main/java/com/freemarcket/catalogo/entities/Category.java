@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @NoArgsConstructor
@@ -19,5 +21,11 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter private Long id;
     @Getter @Setter private String name;
+
+    //@ManyToMany(mappedBy = "categories")
+    //@Getter private Set<Product> products = new HashSet<>();
+
+
+
 
 }

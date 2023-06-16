@@ -20,7 +20,7 @@ import java.util.Set;
 public class ProductDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Getter private Long id;
+    @Getter @Setter private Long id;
     @Size(min = 3, max = 30)
     @Getter @Setter private String name;
     @Getter @Setter private String description;

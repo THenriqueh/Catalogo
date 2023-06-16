@@ -1,16 +1,30 @@
 package com.freemarcket.catalogo.DTO;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
 @AllArgsConstructor
-@NoArgsConstructor
-
 public class CartDTO {
-
     private Long id;
-    private UserDTO user;
+    private List<ProductDTO> produtos;
 
+    public CartDTO() {
+        this.produtos = new ArrayList<>();
+    }
+
+    public void adicionarProduto(ProductDTO produto) {
+        produtos.add(produto);
+    }
+
+    public void removerProduto(ProductDTO produto) {
+        produtos.remove(produto);
+    }
 }
+
